@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Welcome {{ request.user.username }}</h2>
+<p>Login successful 🎉</p>
+
+<a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+
+<hr>
+
+<h3>Your Test Reports</h3>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Date</th>
+        <th>Score</th>
+        <th>Result</th>
+    </tr>
+
+    {% for r in results %}
+    <tr>
+        <td>{{ r.date }}</td>
+        <td>{{ r.score }}</td>
+        <td>{{ r.severity }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="3">No test reports yet</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<br>
+
+<a href="{% url 'take_test' %}" class="btn btn-success">
+    Take New Test
+</a>
+
+<a href="{% url 'doctors' %}" class="btn btn-info">
+    View Doctors
+</a>
+
+{% endblock %}
