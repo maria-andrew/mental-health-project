@@ -1,0 +1,47 @@
+<h2 class="mb-4">📅 Your Appointments</h2>
+
+<div class="row">
+{% for app in appointments %}
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body">
+
+                <h5 class="card-title mb-2">
+                    👨‍⚕️ Dr. {{ app.doctor.name }}
+                </h5>
+
+                <p class="mb-2">
+                    <strong>Status:</strong>
+                    {% if app.status == "pending" %}
+                        <span class="badge bg-warning text-dark">
+                            ⏳ Processing
+                        </span>
+                    {% elif app.status == "approved" %}
+                        <span class="badge bg-success">
+                            ✅ Approved
+                        </span>
+                    {% else %}
+                        <span class="badge bg-danger">
+                            ❌ Rejected
+                        </span>
+                    {% endif %}
+                </p>
+
+                {% if app.status == "approved" %}
+                    <a href="{% url 'patient_chat' app.doctor.id %}"
+                       class="btn btn-outline-primary btn-sm mt-2">
+                        💬 Chat with Doctor
+                    </a>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+{% empty %}
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            📭 No appointments yet.
+        </div>
+    </div>
+{% endfor %}
+</div>

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>💬 Chat with Dr. {{ doctor.name }}</h3>
+
+<div style="border:1px solid #ccc; padding:10px; height:300px; overflow-y:auto;">
+    {% for chat in messages %}
+  <div style="margin-bottom:10px;">
+    {% if chat.sender == "doctor" %}
+      <strong>Doctor:</strong>
+    {% else %}
+      <strong>You:</strong>
+    {% endif %}
+    <p>{{ chat.text }}</p>
+    <small>{{ chat.created_at }}</small>
+  </div>
+{% empty %}
+  <p>No messages yet.</p>
+{% endfor %}
+
+</div>
+
+
+<form method="post" class="mt-3">
+    {% csrf_token %}
+    <textarea name="message" class="form-control" required></textarea>
+    <br>
+    <button class="btn btn-primary">Send</button>
+</form>
+{% for msg in chats %}
+    <p><b>{{ msg.sender }}:</b> {{ msg.text }}</p>
+
+    {% if msg.attachment %}
+        <a href="{{ msg.attachment.url }}" target="_blank">
+            Download / View PDF
+        </a>
+    {% endif %}
+    <hr>
+{% endfor %}
+{% endblock %}

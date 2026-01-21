@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Chat with {{ appointment.patient.username }}</h2>
+
+<div style="border:1px solid #ccc; padding:10px; height:300px; overflow-y:auto;">
+    {% for chat in chats %}
+    <p>
+        <strong>
+            {% if chat.sender == "doctor" %}
+                You:
+            {% else %}
+                Patient:
+            {% endif %}
+        </strong>
+        <br>
+        {{ chat.text }}
+        <br>
+        <small>{{ chat.created_at }}</small>
+    </p>
+{% empty %}
+    <p>No messages yet.</p>
+{% endfor %}
+
+</div>
+
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <textarea name="text" placeholder="Write message"></textarea><br>
+    <input type="file" name="attachment"><br>
+    <button type="submit">Send</button>
+</form>
+
+
+{% endblock %}

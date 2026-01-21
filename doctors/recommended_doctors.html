@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Your Result</h2>
+<p>Score: {{ result.score }}</p>
+<p>Severity: {{ result.severity }}</p>
+
+<hr>
+
+<h3>Recommended Doctors</h3>
+
+{% for doctor in doctors %}
+    <p>
+        {{ doctor.name }} ({{ doctor.level }}) <br>
+        Rating: {{ doctor.average_rating }} ⭐ <br>
+
+        <a href="{% url 'book_appointment' doctor.id %}">Book Appointment</a>
+
+        {% if doctor.is_available %}
+            | <a href="tel:{{ doctor.phone }}">Call Now</a>
+        {% endif %}
+    </p>
+    <hr>
+{% empty %}
+    <p>No doctors available</p>
+{% endfor %}
+
+{% endblock %}

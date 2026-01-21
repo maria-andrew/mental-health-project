@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>📁 Medical History Timeline</h2>
+<hr>
+
+<h4>🧠 Depression Tests</h4>
+<ul class="list-group mb-4">
+{% for t in tests %}
+  <li class="list-group-item">
+    <strong>{{ t.created_at|date:"d M Y" }}</strong><br>
+    Score: {{ t.score }} <br>
+    Severity: <span class="badge bg-danger">{{ t.severity }}</span>
+  </li>
+{% empty %}
+  <li class="list-group-item">No tests taken yet</li>
+{% endfor %}
+</ul>
+
+<h4>📋 Daily Routines</h4>
+<ul class="list-group mb-4">
+{% for r in routines %}
+  <li class="list-group-item">
+    <strong>{{ r.created_at|date:"d M Y" }}</strong><br>
+    Sleep: {{ r.sleep_hours }} hrs<br>
+    Exercise: {{ r.exercise_minutes }} mins<br>
+    Mood: {{ r.mood }}<br>
+    Notes: {{ r.notes }}
+  </li>
+{% empty %}
+  <li class="list-group-item">No routine data</li>
+{% endfor %}
+</ul>
+
+<h4>💊 Doctor Remedies</h4>
+<ul class="list-group">
+{% for rem in remedies %}
+  <li class="list-group-item">
+    <strong>{{ rem.created_at|date:"d M Y" }}</strong><br>
+    {{ rem.notes }}
+  </li>
+{% empty %}
+  <li class="list-group-item">No remedies yet</li>
+{% endfor %}
+</ul>
+
+{% endblock %}

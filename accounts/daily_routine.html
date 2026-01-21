@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>📝 Daily Routine</h2>
+
+<form method="post" class="card p-4">
+    {% csrf_token %}
+
+    <label>Sleep Hours</label>
+    <input type="number" name="sleep_hours" class="form-control" required>
+
+    <label class="mt-2">Exercise (minutes)</label>
+    <input type="number" name="exercise_minutes" class="form-control" required>
+
+    <label class="mt-2">Screen Time (hours)</label>
+    <input type="number" name="screen_time_hours" class="form-control" required>
+
+    <label class="mt-2">Diet Quality</label>
+    <select name="diet_quality" class="form-control">
+        <option value="poor">Poor</option>
+        <option value="average">Average</option>
+        <option value="good">Good</option>
+    </select>
+
+    <label class="mt-2">Mood</label>
+    <select name="mood" class="form-control">
+        <option value="low">Low</option>
+        <option value="neutral">Neutral</option>
+        <option value="happy">Happy</option>
+    </select>
+
+    <label class="mt-2">Notes</label>
+    <textarea name="notes" class="form-control"></textarea>
+
+    <button class="btn btn-primary mt-3">Save Routine</button>
+</form>
+
+<hr>
+
+<h4>Previous Routines</h4>
+{% for r in routines %}
+    <p>
+        📅 {{ r.created_at|date:"d M Y" }} |
+        😴 {{ r.sleep_hours }}h |
+        🏃 {{ r.exercise_minutes }}min |
+        📱 {{ r.screen_time_hours }}h |
+        😊 {{ r.mood }}
+    </p>
+{% empty %}
+    <p>No routine added yet.</p>
+{% endfor %}
+
+{% endblock %}

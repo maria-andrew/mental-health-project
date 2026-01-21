@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <h1 class="text-center text-primary">Depression Test</h1>
+  <p class="text-center">Over the last 2 weeks, how often have you been bothered by the following problems?</p>
+
+  <form method="post">
+    {% csrf_token %}
+
+    {% for field in form %}
+    <div class="card mb-4 p-3">
+      <h5>{{ forloop.counter }}. {{ field.label }}</h5>
+
+      {% for radio in field %}
+        <div class="form-check">
+          {{ radio.tag }}
+          <label class="form-check-label">{{ radio.choice_label }}</label>
+        </div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+
+    <div class="text-center">
+      <button class="btn btn-success btn-lg">Submit Test</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

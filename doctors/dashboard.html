@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Doctor Dashboard</h2>
+
+<p><strong>Name:</strong> {{ doctor.name }}</p>
+<p><strong>Specialization:</strong> {{ doctor.specialization }}</p>
+
+<h3>Availability</h3>
+{% if doctor.is_available %}
+    <span style="color: green; font-weight: bold;">Available for Call</span>
+{% else %}
+    <span style="color: red; font-weight: bold;">Not Available</span>
+{% endif %}
+
+<br><br>
+
+<a href="{% url 'toggle_availability' %}" class="btn btn-warning">
+    Toggle Availability
+</a>
+
+<br><br>
+
+<a href="{% url 'doctor_logout' %}" class="btn btn-danger">Logout</a>
+
+<hr>
+
+<h3>Appointments</h3>
+
+
+{% if appointments %}
+    {% for app in appointments %}
+        <p>
+            Patient: {{ app.patient.username }} |
+            Status: {{ app.status }}
+        </p>
+    {% endfor %}
+{% else %}
+    <p>No patients assigned yet.</p>
+{% endif %}
+{% for app in appointments %}
+<div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+    <p>
+        <strong>Patient:</strong> {{ app.patient.username }} <br>
+        <strong>Status:</strong> {{ app.status }}
+    </p>
+
+    {% if app.status == "pending" %}
+        <a href="{% url 'update_appointment_status' app.id 'approved' %}" class="btn btn-success">
+            Approve
+        </a>
+        <a href="{% url 'update_appointment_status' app.id 'declined' %}" class="btn btn-danger">
+            Decline
+        </a>
+    {% endif %}
+    {% if app.status == "approved" %}
+    <a href="{% url 'view_patient_details' app.id %}" class="btn btn-info">
+        View Test
+    </a>
+
+    <a href="{% url 'add_remedy' app.id %}">
+
+    <button>Add Remedy</button></a>
+    <a href="{% url 'doctor_chat' app.id %}" class="btn btn-success">
+    Chat with Patient</a>
+
+    {% endif %}
+</div>
+
+{% empty %}
+  <p>No appointments yet.</p>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-5 col-lg-4">
+        <div class="card shadow-lg border-0 mt-5">
+            <div class="card-body p-4">
+
+                <h3 class="text-center mb-4 text-primary">
+                    👨‍⚕️ Doctor Login
+                </h3>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <!-- Username -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">
+                            Username
+                        </label>
+                        <input
+                            type="text"
+                            name="username"
+                            class="form-control form-control-lg"
+                            placeholder="Enter your username"
+                            required
+                        >
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">
+                            Password
+                        </label>
+                        <input
+                            type="password"
+                            name="password"
+                            class="form-control form-control-lg"
+                            placeholder="Enter your password"
+                            required
+                        >
+                    </div>
+
+                    <!-- Login Button -->
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            Login
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Register Link -->
+                <div class="text-center mt-3">
+                    <a href="{% url 'doctor_register' %}" class="text-decoration-none">
+                        Create Doctor Account
+                    </a>
+                </div>
+
+                <!-- Messages -->
+                {% for message in messages %}
+                    <div class="alert alert-danger mt-3 text-center">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Patient Test Details</h2>
+
+<p>
+    <strong>Patient:</strong> {{ appointment.patient.username }} <br>
+    <strong>Date:</strong> {{ appointment.date }}
+</p>
+
+{% if result %}
+    <h4>Depression Result</h4>
+    <p>
+        <strong>Score:</strong> {{ result.score }} <br>
+        <strong>Severity:</strong> {{ result.severity }}
+    </p>
+
+    <h3>Answers</h3>
+
+<ul>
+{% for answer in answers %}
+    <li>
+        <strong>{{ answer.question_text }}</strong><br>
+        Selected Answer: {{ answer.choice_text }}<br>
+        Selected Score: {{ answer.choice_score }}
+    </li>
+{% empty %}
+    <li>No answers available.</li>
+{% endfor %}
+</ul>
+
+    <h4>Daily Routine History</h4>
+
+{% for r in routines %}
+    <p>
+        📅 {{ r.created_at|date:"d M Y" }} |
+        😴 {{ r.sleep_hours }}h |
+        🏃 {{ r.exercise_minutes }}min |
+        📱 {{ r.screen_time_hours }}h |
+        😊 {{ r.mood }}
+    </p>
+{% empty %}
+    <p>No routine data available.</p>
+{% endfor %}
+
+    
+{% else %}
+    <p>No test taken yet.</p>
+{% endif %}
+
+<a href="{% url 'doctor_dashboard' %}" class="btn btn-secondary">
+    Back to Dashboard
+</a>
+
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>📊 Your Mental Health Progress</h2>
+
+{% if dates %}
+    <canvas id="progressChart" width="600" height="300"></canvas>
+{% else %}
+    <p>No test data available yet.</p>
+{% endif %}
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const labels = {{ dates|safe }};
+    const dataValues = {{ scores|safe }};
+
+    const ctx = document.getElementById('progressChart');
+
+    if (ctx) {
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Depression Score',
+                    data: dataValues,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    fill: true,
+                    tension: 0.3,
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Score'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        }
+                    }
+                }
+            }
+        });
+    }
+</script>
+
+{% endblock %}

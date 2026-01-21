@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+
+    <!-- PROFILE CARD -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h3 class="mb-3">👋 Welcome, {{ user.username }}</h3>
+
+            {% if profile %}
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Gender:</strong> {{ profile.gender }}</p>
+                    <p><strong>Occupation:</strong> {{ profile.occupation }}</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Email:</strong> {{ profile.email }}</p>
+                    <p><strong>Phone:</strong> {{ profile.phone }}</p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h4 class="mb-3">🚀 Your Actions</h4>
+
+            <div class="d-flex flex-wrap gap-2">
+                <a class="btn btn-primary" href="{% url 'daily_routine' %}">
+                    📝 Daily Routine
+                </a>
+                <a class="btn btn-success" href="{% url 'take_test' %}">
+                    🧠 Take Depression Test
+                </a>
+                <a class="btn btn-info text-white" href="{% url 'test_history' %}">
+                    📊 Test History
+                </a>
+                <a class="btn btn-warning" href="{% url 'medical_history' %}">
+                    📁 Medical History
+                </a>
+                <a class="btn btn-outline-primary" href="{% url 'progress_graph' %}">
+                    📈 Progress
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- APPOINTMENTS -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h4 class="mb-3">📅 Your Appointments</h4>
+
+            {% for app in appointments %}
+                <div class="border rounded p-3 mb-3">
+                    <p>
+                        <strong>Doctor:</strong> {{ app.doctor.name }} <br>
+                        <strong>Status:</strong>
+                        <span class="badge bg-success">{{ app.status }}</span>
+                    </p>
+
+                    {% if app.status == "approved" and app.doctor %}
+                        <a class="btn btn-outline-primary btn-sm"
+                           href="{% url 'patient_chat' app.doctor.id %}">
+                            💬 Chat with Doctor
+                        </a>
+                    {% else %}
+                        <span class="text-muted">Doctor not assigned yet</span>
+                    {% endif %}
+                </div>
+            {% empty %}
+                <p class="text-muted">No appointments yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- PRESCRIPTIONS -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h4 class="mb-3">💊 Your Prescriptions</h4>
+
+            {% for remedy in remedies %}
+                <div class="border rounded p-3 mb-3">
+                    <p>{{ remedy.notes }}</p>
+
+                    {% if remedy.prescription_file %}
+                        <a class="btn btn-sm btn-outline-success"
+                           href="{{ remedy.prescription_file.url }}" target="_blank">
+                            📄 View Prescription PDF
+                        </a>
+                    {% endif %}
+                </div>
+            {% empty %}
+                <p class="text-muted">No prescriptions yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

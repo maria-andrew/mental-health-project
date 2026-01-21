@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Your Result</h2>
+
+{% if result %}
+    <p><strong>Score:</strong> {{ result.score }}</p>
+    <p><strong>Severity:</strong> {{ result.severity }}</p>
+{% else %}
+    <p>No test result found.</p>
+{% endif %}
+
+<hr>
+
+<h2>Suggestions & Remedies</h2>
+
+{% if remedy %}
+    <h3>{{ remedy.title }}</h3>
+    <p>{{ remedy.description }}</p>
+
+    {% if remedy.image %}
+        <img src="{{ remedy.image.url }}" width="300">
+    {% endif %}
+{% else %}
+    <p>No remedy available for this severity.</p>
+{% endif %}
+
+<hr>
+
+<h2>Recommended Doctors</h2>
+
+{% if doctors %}
+    {% for doctor in doctors %}
+        <div>
+            <strong>{{ doctor.user.username }}</strong><br>
+            Specialization: {{ doctor.specialization }}<br>
+            <a href="{% url 'request_appointment' doctor.id %}">
+                Book Appointment
+            </a>
+        </div>
+        <hr>
+    {% endfor %}
+{% else %}
+    <p>No doctors available right now.</p>
+{% endif %}
+
+
+{% endblock %}

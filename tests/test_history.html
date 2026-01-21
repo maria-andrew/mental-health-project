@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Your Test History</h2>
+
+{% for item in history %}
+    <hr>
+    <h3>Date: {{ item.result.created_at }}</h3>
+
+    <p>
+        <strong>Score:</strong> {{ item.result.score }} <br>
+        <strong>Severity:</strong> {{ item.result.severity }}
+    </p>
+
+    <h4>Answers</h4>
+    <ul>
+        {% for answer in item.answers %}
+            <li>
+                <strong>{{ answer.question_text }}</strong><br>
+                Selected Answer: {{ answer.choice_text }}<br>
+                Selected Score: {{ answer.choice_score }}
+            </li>
+        {% empty %}
+            <li>No answers recorded.</li>
+        {% endfor %}
+    </ul>
+
+{% empty %}
+    <p>No test history available.</p>
+{% endfor %}
+
+{% endblock %}

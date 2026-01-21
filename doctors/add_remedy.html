@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+{% load form_tags %}
+
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+
+            <div class="card shadow border-0">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        🩺 Add Remedy for {{ appointment.patient.username }}
+                    </h5>
+                </div>
+                <h5 class="mb-0">
+    {% if is_edit %}
+        ✏️ Update Remedy for {{ appointment.patient.username }}
+    {% else %}
+        ➕ Add Remedy for {{ appointment.patient.username }}
+    {% endif %}
+</h5>
+
+
+                <div class="card-body">
+
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <!-- Doctor Notes -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">
+                                📝 Doctor Notes
+                            </label>
+                            {{ form.notes }}
+                        </div>
+
+                        <!-- Prescription Upload -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">
+                                📄 Upload Prescription (PDF)
+                            </label>
+                            {{ form.prescription_file }}
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'doctor_dashboard' %}"
+                               class="btn btn-outline-secondary">
+                                ⬅ Back
+                            </a>
+
+                            <button type="submit" class="btn btn-success">
+                                💾 Save Remedy
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

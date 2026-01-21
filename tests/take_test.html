@@ -1,0 +1,48 @@
+<form method="post" class="mt-4">
+    {% csrf_token %}
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <h4 class="mb-4 text-center">
+                🧠 Depression Assessment
+            </h4>
+
+            {% for q in questions %}
+                <div class="mb-4 p-3 border rounded">
+
+                    <!-- Question -->
+                    <p class="fw-semibold mb-3">
+                        {{ forloop.counter }}. {{ q.text }}
+                    </p>
+
+                    <!-- Choices -->
+                    {% for c in q.choices.all %}
+                        <div class="form-check mb-2">
+                            <input class="form-check-input"
+                                   type="radio"
+                                   name="{{ q.id }}"
+                                   id="q{{ q.id }}_{{ c.id }}"
+                                   value="{{ c.id }}"
+                                   required>
+
+                            <label class="form-check-label"
+                                   for="q{{ q.id }}_{{ c.id }}">
+                                {{ c.text }}
+                            </label>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            {% endfor %}
+
+            <!-- Submit -->
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success btn-lg px-5">
+                    ✅ Submit Test
+                </button>
+            </div>
+
+        </div>
+    </div>
+</form>

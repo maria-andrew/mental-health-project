@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Available Doctors</h2>
+
+{% for d in doctors %}
+<div style="border:1px solid #ccc; padding:10px; margin-bottom:10px">
+    <b>{{ d.name }}</b><br>
+    Specialization: {{ d.specialization }}<br>
+    Experience: {{ d.experience }} years<br>
+    Level: {{ d.level }}<br>
+
+    <a href="{% url 'book_appointment' d.id %}">Book Appointment</a>
+</div>
+{% endfor %}
+
+
+{% endblock %}

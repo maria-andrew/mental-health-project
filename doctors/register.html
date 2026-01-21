@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-lg border-0 mt-4">
+            <div class="card-body p-4">
+
+                <h3 class="text-center text-primary mb-4">
+                    👨‍⚕️ Doctor Registration
+                </h3>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <!-- Username -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Username</label>
+                        <input type="text" name="username"
+                               class="form-control"
+                               placeholder="Choose a username"
+                               required>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Password</label>
+                        <input type="password" name="password"
+                               class="form-control"
+                               placeholder="Create a password"
+                               required>
+                    </div>
+
+                    <!-- Full Name -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Full Name</label>
+                        <input type="text" name="name"
+                               class="form-control"
+                               placeholder="Doctor full name"
+                               required>
+                    </div>
+
+                    <!-- Gender -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Gender</label>
+                        <select name="gender" class="form-select" required>
+                            <option value="">Select Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <!-- Specialization -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Specialization</label>
+                        <input type="text" name="specialization"
+                               class="form-control"
+                               placeholder="e.g. Psychology"
+                               required>
+                    </div>
+
+                    <!-- Experience -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Experience (years)</label>
+                        <input type="number" name="experience"
+                               class="form-control"
+                               placeholder="Years of experience"
+                               required>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Email</label>
+                        <input type="email" name="email"
+                               class="form-control"
+                               placeholder="doctor@email.com"
+                               required>
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Phone Number</label>
+                        <input type="text" name="phone"
+                               class="form-control"
+                               placeholder="Contact number"
+                               required>
+                    </div>
+
+                    <!-- Website -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Website (optional)</label>
+                        <input type="url" name="website"
+                               class="form-control"
+                               placeholder="https://yourwebsite.com">
+                    </div>
+
+                    <!-- Level -->
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">Doctor Level</label>
+                        <select name="level" class="form-select" required>
+                            <option value="junior">Junior Doctor</option>
+                            <option value="senior">Senior Doctor</option>
+                        </select>
+                    </div>
+
+                    <!-- Register Button -->
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success btn-lg">
+                            Register
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Login Link -->
+                <div class="text-center mt-3">
+                    <a href="{% url 'doctor_login' %}" class="text-decoration-none">
+                        Already registered? Login
+                    </a>
+                </div>
+
+                <!-- Messages -->
+                {% for message in messages %}
+                    <div class="alert alert-danger mt-3 text-center">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
